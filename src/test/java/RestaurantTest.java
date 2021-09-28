@@ -21,6 +21,9 @@ class RestaurantTest {
         LocalTime openingTime = LocalTime.parse("10:30:00");
         LocalTime closingTime = LocalTime.parse("22:00:00");
         restaurant = new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+        //Below items added to correct the Part 3 failing test cases
+        restaurant.addToMenu("Sweet corn soup",119);
+        restaurant.addToMenu("Vegetable lasagne", 269);
 
     }
 
@@ -47,7 +50,7 @@ class RestaurantTest {
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER VALUE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     @Test
-    //Failed Test Case for Part3
+
     public void order_value_should_get_cumulative_total_when_collection_of_items_selected(){
         restaurantCreation();
         spoof = restaurant.getMenu();
@@ -76,7 +79,6 @@ class RestaurantTest {
     }
 
     @Test
-    //Failed Test Case for Part3
     public void removing_item_from_menu_should_decrease_menu_size_by_1() throws itemNotFoundException {
         restaurantCreation();
         int initialMenuSize = restaurant.getMenu().size();
