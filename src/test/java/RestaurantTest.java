@@ -4,8 +4,8 @@ import java.time.LocalTime;
 
 
 //Few java packages imported from refactoring perspective
-//import java.util.ArrayList;
-//import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,13 +15,13 @@ class RestaurantTest {
 
     //spoof variable acts as the menu selected by the user
     //List<Item> spoof = new ArrayList<Item>();
+    List<Item> spoof = new ArrayList<Item>();
 
-     public void restaurantCreation(){
+    public void restaurantCreation(){
         LocalTime openingTime = LocalTime.parse("10:30:00");
         LocalTime closingTime = LocalTime.parse("22:00:00");
         restaurant = new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
-        restaurant.addToMenu("Sweet corn soup",119);
-        restaurant.addToMenu("Vegetable lasagne", 269);
+
     }
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -45,6 +45,26 @@ class RestaurantTest {
 
     //<<<<<<<<<<<<<<<<<<<<<<<<<OPEN/CLOSED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER VALUE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    @Test
+    //Failed Test Case for Part3
+    public void order_value_should_get_cumulative_total_when_collection_of_items_selected(){
+        restaurantCreation();
+        spoof = restaurant.getMenu();
+        assertEquals(506,restaurant.getOrderValue(spoof));
+    }
+
+    @Test
+    public void order_value_should_reduce_cumulative_total_when_an_item_removed(){
+        restaurantCreation();
+        spoof = restaurant.getMenu();
+        int total = restaurant.getOrderValue(spoof);
+        int afterTotal = spoof.get(1).getPrice();
+        spoof.remove(1);
+        assertEquals(total-afterTotal,restaurant.getOrderValue(spoof));
+    }
+    //<<<<<<<<<<<<<<<<<<<<<<<<<ORDER VALUE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>MENU<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     @Test
@@ -56,6 +76,7 @@ class RestaurantTest {
     }
 
     @Test
+    //Failed Test Case for Part3
     public void removing_item_from_menu_should_decrease_menu_size_by_1() throws itemNotFoundException {
         restaurantCreation();
         int initialMenuSize = restaurant.getMenu().size();
